@@ -1,0 +1,333 @@
+#loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    z-index: 9999;
+    transition: opacity 0.8s;
+  }
+  
+  #loading-video {
+    width: 70%;
+    height: auto;
+    max-height: 70vh;
+  }
+  
+  .loading-text {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+  }
+  
+  .body-text {
+    text-align: center;
+    font-weight: 500;
+    font-size: x-large;
+    margin-top: 5%;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 8vh;
+    background-color: teal;
+    font-family: "Montserrat", sans-serif;
+    padding-left: 20px;
+  }
+  
+  .heading {
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 20px;
+  }
+  
+  .nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 35%;
+  }
+  
+  .nav-links li {
+    list-style: none;
+  }
+
+  .dropdown{
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: teal;
+    min-width: 260px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .nav-links a {
+    color: white;
+    text-decoration: none;
+    letter-spacing: 3px;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 14px 16px;
+  }
+  
+  .nav-links a:hover:not(.active) {
+    background-color: lightseagreen;
+  }
+  
+  .nav-links li a.active {
+    background-color: #4caf50;
+  }
+  
+  .header-font{
+    position: absolute;
+    z-index: 3;
+  }
+
+  .carousel-container {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  }
+  
+  .carousel-slide {
+    display: flex;
+    width: 300%;
+    animation: slide 15s infinite;
+  }
+  
+  .carousel-slide img {
+    width: 33.33%;
+    
+  }
+  
+  .searchBar-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 4%;
+    margin-bottom: 4%;
+  }
+
+  .searchBar{
+    height: 30px;
+    border-radius: 10px;
+    border: 0.5px solid black;
+  }
+
+  .searchBar-container button{
+    height: 30px;
+  }
+
+  .result{
+    background-color: #f5f5f5;
+    margin: 10px;
+    width: 99%;
+    padding: 20px;
+    /* padding-right: 20px; */
+    height: fit-content;
+  }
+
+ .card{
+    height: fit-content; 
+    background-color: teal;
+    color: white;
+    border: 1px solid #eae6e6;
+    margin: 10px;
+    border-radius: 15px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    transition: all 0.3s;
+    width: 30%;
+    padding: 10px;
+  }
+  
+  .card h5{
+    font-size: large;
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    width:50px;
+  }
+
+  .card .desc{
+    font-size: large;
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  /*.card:hover {*/
+  /*  border: 1px solid rgb(0, 0, 0);*/
+  /*  background-color: #c9e6bc;*/
+  /*  color: black;*/
+  /*  transform: scale(1.02);*/
+  /*}*/
+
+  .drop {
+    width: fit-content;
+    min-width: 100px;
+    height: 35px;
+    padding: 4px;
+    border-radius: 9px;
+    border: 2.5px solid #E0E1E4;
+    box-shadow: 0px 0px 20px -20px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease-in-out 0ms;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .drop:hover {
+    background-color: #ff0000;
+    box-shadow: 0px 0px 20px -18px;
+    color: white;
+  }
+  
+  .form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+  
+  form{
+      display: inline-block;
+      margin-top: 5px;
+  }
+  
+  /*.completed-form{*/
+  /*    float: right;*/
+  /*}*/
+  
+  .drop:active {
+    transform: scale(0.95);
+  }
+
+  .completed, .completed:focus {
+    /* font-size: 17px; */
+    height: 35px;
+    width: 100px;
+    padding: 4px;
+    border-radius: 9px;
+    background-color: gainsboro;
+    border: 2px solid rgb(50, 50, 50);
+    /* border-bottom: 5px solid rgb(50, 50, 50); */
+    /* box-shadow: 0px 1px 6px 0px rgb(72, 72, 72); */
+    transform: translate(0, -3px);
+    transition: 0.2s;
+    transition-timing-function: linear;
+    float: right;
+  }
+  
+  .completed:active {
+    transform: translate(0, 0);
+    color: white;
+    background-color: rgb(15, 171, 15);
+    border-bottom: 2px solid rgb(0, 255, 123);
+  }
+
+  .completed:hover {
+    color: white;
+    background-color: rgb(15, 171, 15);
+    border: 2px solid green;
+    border-bottom: 2px solid rgb(0, 255, 123);
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .card {
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .card-details {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes dropButtonFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .card:hover .drop-button {
+      animation: dropButtonFadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes cardHover {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .card:hover {
+      animation: cardHover 0.5s infinite;
+    }
