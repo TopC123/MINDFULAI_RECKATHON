@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>To-Do List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #fff;
+      display: block;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .content {
+      margin-left: 200px;
+      padding: 20px;
+      transition: margin 0.3s ease;
+    }
+
+    #loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-size: 20px;
+    }
+
+    #todo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #todo-form {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    #todo-input,
+    #description-input,
+    #datetime-input {
+      flex-grow: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #todo-input {
+      margin-right: 10px;
+    }
+
+    #todo-input:focus,
+    #description-input:focus,
+    #datetime-input:focus {
+      outline: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    #todo-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .todo-card {
+      position: relative;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      height: 50px;
+    }
+
+    .todo-card:hover {
+      transform: translateY(-5px);
+      height: 100px;
+    }
+
+    .todo-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .todo-card:hover::before {
+      opacity: 1;
+    }
+
+    .todo-details {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      color: #fff;
+      font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .todo-card:hover .todo-details {
+      opacity: 1;
+    }
+
+    .todo-details h3,
+    .todo-details p {
+      margin: 5px 0;
+    }
+
+    .todo-details p:last-child {
+      margin-bottom: 0;
+    }
+
+    .drop-button {
+        display: none;
+  position: absolute;
+  top: 300px;
+  right: 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+    }
+
+    #todo-count {
+      text-align: center;
+      color: #333;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .todo-card .drop-button {
+  position: absolute;
+  top: 50px;
+  
+  display: none;
+  z-index: 3;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.todo-card:hover .drop-button {
+  display: block;
+  opacity: 1;
+  top: 80px;
+}
+
+
+    /* Animation */
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .todo-card {
+      animation: slideIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .todo-details {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes dropButtonFadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .todo-card:hover .drop-button {
+      animation: dropButtonFadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes cardHover {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-5px);
+      }
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .todo-card:hover {
+      animation: cardHover 0.5s infinite;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Profile</a></li>
+      <li><a href="#">Logout</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <div id="loading-container">
+      Loading...
+    </div>
+
+    <div id="todo-container">
+      <h1>To-Do List</h1>
+      <form id="todo-form">
+        <input type="text" id="todo-input" placeholder="Enter a task" required>
+        <input type="text" id="description-input" placeholder="Enter a description" required>
+        <input type="datetime-local" id="datetime-input" required>
+        <select id="category-input">
+          <option value="">Select a category</option>
+          <option value="personal">Personal</option>
+          <option value="work">Work</option>
+          <option value="shopping">Shopping</option>
+          <option value="health">Health</option>
+        </select>
+        <button type="submit">Add</button>
+      </form>
+      <div id="todo-list"></div>
+      <p id="todo-count"></p>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const loadingContainer = document.getElementById('loading-container');
+      const todoContainer = document.getElementById('todo-container');
+      const todoForm = document.getElementById('todo-form');
+      const todoList = document.getElementById('todo-list');
+
+      // Simulating delay
+      setTimeout(function() {
+        loadingContainer.style.display = 'none';
+        todoContainer.classList.add('show');
+      }, 2000);
+
+      // Store the selected category colors
+      const categoryColors = {
+        personal: '#ff8080',
+        work: '#80b3ff',
+        shopping: '#ffcc66',
+        health: '#b3ffb3'
+      };
+
+      todoForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const todoInput = document.getElementById('todo-input').value;
+        const descriptionInput = document.getElementById('description-input').value;
+        const datetimeInput = document.getElementById('datetime-input').value;
+        const categoryInput = document.getElementById('category-input').value;
+
+        createTodoCard(todoInput, descriptionInput, datetimeInput, categoryInput);
+
+        // Clear the form inputs
+        todoForm.reset();
+      });
+
+      function createTodoCard(todo, description, datetime, category) {
+        // Create a new to-do item element
+        const todoCard = document.createElement('div');
+        todoCard.classList.add('todo-card');
+        todoCard.style.backgroundColor = categoryColors[category];
+
+        const titleElement = document.createElement('h3');
+        titleElement.textContent = todo;
+        todoCard.appendChild(titleElement);
+
+        const detailsContainer = document.createElement('div');
+        detailsContainer.classList.add('todo-details');
+
+        const descriptionElement = document.createElement('p');
+        descriptionElement.textContent = `Description: ${description}`;
+        detailsContainer.appendChild(descriptionElement);
+
+        const datetimeElement = document.createElement('p');
+        datetimeElement.textContent = `Due Date: ${formatDatetime(datetime)}`;
+        detailsContainer.appendChild(datetimeElement);
+
+        todoCard.appendChild(detailsContainer);
+
+        const dropButton = document.createElement('button');
+        dropButton.textContent = 'Drop';
+        dropButton.classList.add('drop-button');
+        dropButton.addEventListener('click', function() {
+          todoList.removeChild(todoCard);
+        });
+        todoCard.appendChild(dropButton);
+
+        todoCard.addEventListener('mouseenter', function() {
+          detailsContainer.style.display = 'block';
+        });
+
+        todoCard.addEventListener('mouseleave', function() {
+          detailsContainer.style.display = 'none';
+        });
+
+        todoList.appendChild(todoCard);
+      }
+
+      function formatDatetime(datetime) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+        return new Date(datetime).toLocaleString('en-US', options);
+      }
+    });
+  </script>
+</body>
+</html>
