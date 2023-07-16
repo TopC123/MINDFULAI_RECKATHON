@@ -21,7 +21,7 @@ Tech Stack used:
     -> PHP, PHP MyAdmin
 
 
-###Note:
-  Try not to bombard the database
-  If the URL shows "DANGEROUS WEBSITE" warning, please don't back off, go ahead, it is completely fine :)
+### Note:
+  - Try not to bombard the database
+  - If the URL shows "DANGEROUS WEBSITE" warning, please don't back off, go ahead, it is completely fine :)
   
